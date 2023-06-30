@@ -8,7 +8,12 @@
 By default, **ServifAI** can chat while browsing internet and solving common math problems.
 
 # Installation
-```python
+Works best with [Poetry](https://python-poetry.org/docs/)
+```bash
+poetry add servifai
+```
+With pip, you might have to install dependencies manually
+```bash
 pip install servifai
 ```
 
