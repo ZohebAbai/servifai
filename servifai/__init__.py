@@ -1,2 +1,2 @@
 __version__ = "0.1.0"
-from .servifai import Servifai
+from .servifai import ServifAI
