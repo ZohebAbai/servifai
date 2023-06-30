@@ -56,13 +56,13 @@ class ServifAI:
         return config
 
     def query(self, question: str):
-        """_summary_
+        """Responds to user query as chat conversation
 
         Args:
-            question (str): _description_
+            question (str): user query
 
         Returns:
-            _type_: _description_
+            str: Response
         """
         try:
             logging.info("Generating response:")
