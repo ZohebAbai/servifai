@@ -44,8 +44,11 @@ myagent = ServifAI()
 
 while True:
     text_input = input("Me: ")
-    response = myagent.query(text_input)
-    print(f'ServifAI: {response}\n')
+    if text_input != "exit":
+        response = myagent.query(text_input)
+        print(f'ServifAI: {response}\n')
+    else:
+        break
 ```
 Output
 ```
@@ -91,8 +94,11 @@ myagent = ServifAI('configs/uber_10q.yaml')
 
 while True:
     text_input = input("Me: ")
-    response = myagent.query(text_input)
-    print(f'ServifAI: {response}\n')
+    if text_input != "exit":
+        response = myagent.query(text_input)
+        print(f'ServifAI: {response}\n')
+    else:
+        break
 ```
 - Output
 ```
