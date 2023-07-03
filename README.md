@@ -13,7 +13,7 @@
 
 Instead of feeding all kinds of tools to a single agent and confusing it while selection, **ServifAI** narrows down the selection by combining only necessary tools on basis of the task at hand.
 
-Read [this article to understand How Agents works](https://lilianweng.github.io/posts/2023-06-23-agent/). 
+Read [this article to get an overview on Agents](https://lilianweng.github.io/posts/2023-06-23-agent/). 
 
 ### Current Supported Tasks:
 |  Tasks | Toolbox Tools |
