@@ -1,13 +1,27 @@
 # ServifAI
+
 *A mini framework built on top of Langchain and Llamaindex to provide LLM powered Autonomous Agents as a simplified service to assist users with their tasks.*
 
-**Agent = LLM + memory + planning skills + tool use**
+![PyPI](https://img.shields.io/github/license/zohebabai/servifai)
+![PyPI](https://img.shields.io/pypi/v/servifai)
+
+## Overview
+
+**ServifAI (Task-based Agent) = LLM + Memory + Planning + Toolbox**
 
 ![agent_pic](https://lilianweng.github.io/posts/2023-06-23-agent/agent-overview.png)
 
+Instead of feeding all kinds of tools to a single agent and confusing it while selection, **ServifAI** narrows down the selection by combining only necessary tools on basis of the task at hand.
+
+Read [this article to understand How Agents works](https://lilianweng.github.io/posts/2023-06-23-agent/). 
+
 By default, **ServifAI** can chat while browsing internet and solving common math problems.
 
-# Installation
+### Current Toolbox Status:
+- Default (DuckDuckgo + LLM Math + PAL Math)
+- QA Knowledge Base (Vector Index + Knowledge Graphs)
+
+## Installation
 Works best with [Poetry](https://python-poetry.org/docs/)
 ```bash
 poetry add servifai
@@ -17,7 +31,7 @@ With pip, you might have to install dependencies manually
 pip install servifai
 ```
 
-# Usage
+## Usage
 Create a `.env` file
 ```env
 OPENAI_API_KEY='sk-...'
@@ -42,8 +56,8 @@ Me: What is the current weather of Bengaluru?
 ServifAI: The current weather in Bengaluru is mostly cloudy with a temperature of 81°F (27°C). The wind is coming from the north at 3 mph (5 km/h). Tomorrow's temperature is expected to be nearly the same as today.
 
 ```
-# Data Creation Recipe for Local Knowledge Extraction Tasks
-Consider the example of Uber 10Q filings. 
+## Data Creation Recipe for Local Knowledge Extraction Tasks
+Consider the example of [Uber 10Q filings](https://investor.uber.com/financials/default.aspx). 
 - Download the quaterly reports for year 2022 and 2023 as pdf and save it locally in a directory (here `reports`).
 - Create a config YAML file `uber_10q.yaml` inside a `configs` dir and fill details as:
 ```yaml
@@ -97,7 +111,9 @@ ServifAI: Based on the provided context, the cash balance for Uber at the end of
 ```
 
 # TODO:
+- [ ] Add other task based tools
 - [ ] Add support for Local LLMs
 - [ ] Add support for other VectorDBs
 - [ ] Add support for other unstructured data
 - [ ] Add support for structured data 
+- [ ] OpenAI funcs

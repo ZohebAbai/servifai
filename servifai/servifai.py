@@ -5,9 +5,9 @@ from pathlib import Path
 
 import yaml
 
-from servifai.agents.react import ReactChatAgent
-from servifai.llms.openai import OpenAILLM
-from servifai.tools.knowledge_base import KnowledgeBase
+from servifai.llm.openai import OpenAILLM
+from servifai.planning.react import ReactChatAgent
+from servifai.toolbox.knowledge_base import KnowledgeBase
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
@@ -19,7 +19,7 @@ DEFAULT_CONFIG = Path(BASE_DIR, "servifai/default_config.yaml")
 
 class ServifAI:
     def __init__(self, config_file=None):
-        """Initializes a Assistify instance with specific config for a particular data
+        """Initializes a ServifAI instance with specific config for a given task
 
         Args:
             cfg (DictConfig): specific constants for a particular data
@@ -65,7 +65,10 @@ class ServifAI:
             str: Response
         """
         try:
-            logging.info("Generating response:")
-            return self.agent.chat(question)
+            if question != "":
+                logging.info("Generating response:")
+                return self.agent.chat(question)
+            else:
+                logging.warning("No input text provided by user")
         except Exception as e:
             logging.error(f"Error {e} occured")

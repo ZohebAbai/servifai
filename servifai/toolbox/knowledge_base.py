@@ -15,7 +15,7 @@ from llama_index.indices.query.query_transform.base import DecomposeQueryTransfo
 from llama_index.query_engine.transform_query_engine import TransformQueryEngine
 from llama_index.vector_stores import ChromaVectorStore
 
-from servifai.llms.openai import OpenAILLM
+from servifai.llm.openai import OpenAILLM
 from servifai.memory.chroma import ChromaDB
 
 

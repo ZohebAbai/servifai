@@ -1,7 +1,7 @@
 from langchain.agents import initialize_agent
 from langchain.chains.conversation.memory import ConversationBufferMemory
 
-from servifai.tools.default import DefaultTools
+from servifai.toolbox.default import DefaultTools
 
 
 class ReactChatAgent:
