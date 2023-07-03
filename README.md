@@ -15,11 +15,12 @@ Instead of feeding all kinds of tools to a single agent and confusing it while s
 
 Read [this article to understand How Agents works](https://lilianweng.github.io/posts/2023-06-23-agent/). 
 
-By default, **ServifAI** can chat while browsing internet and solving common math problems.
+### Current Supported Tasks:
+|  Tasks | Toolbox Tools |
+| :------ | :---------------: |
+| `default` | DuckDuckGo + LLM Math + PAL Math |
+| `qa_knowledge_base` | Vector Index + Knowledge Graphs |
 
-### Current Toolbox Status:
-- Default (DuckDuckgo + LLM Math + PAL Math)
-- QA Knowledge Base (Vector Index + Knowledge Graphs)
 
 ## Installation
 Works best with [Poetry](https://python-poetry.org/docs/)
