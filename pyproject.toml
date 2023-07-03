@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "servifai"
-version = "0.1.0"
-description = "A mini framework built on top of Langchain and Llamaindex to simplify creation of LLM powered Autonomous Agents"
+version = "0.1.1"
+description = "A mini framework built on top of Langchain and Llamaindex to provide LLM powered Autonomous Agents as a simplified service to assist users with their tasks"
 authors = ["Zoheb Abai <zohebabai@gmail.com>"]
 license = "MIT"
 readme = "README.md"
