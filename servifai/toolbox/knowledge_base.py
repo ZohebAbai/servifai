@@ -117,7 +117,9 @@ class KnowledgeBase:
             chunk_size_limit=self.chunk_size_limit,
         )
         self.service_context = ServiceContext.from_defaults(
-            llm_predictor=self.llm_predictor, prompt_helper=prompt_helper
+            llm_predictor=self.llm_predictor,
+            prompt_helper=prompt_helper,
+            embed_model=self.vectordb.embed,
         )
         self.storage_context = StorageContext.from_defaults(
             vector_store=self.vectorstore

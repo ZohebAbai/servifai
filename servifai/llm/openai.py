@@ -16,6 +16,7 @@ class OpenAI:
     def _get_openai_model(self):
         if os.getenv("OPENAI_API_TYPE") == "azure":
             return AzureChatOpenAI(
+                openai_api_type="azure",
                 deployment_name=os.getenv("DEPLOYMENT_ID"),
                 openai_api_base=os.getenv("OPENAI_API_BASE"),
                 openai_api_version=os.getenv("OPENAI_API_VERSION"),
