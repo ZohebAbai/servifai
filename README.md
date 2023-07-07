@@ -19,7 +19,7 @@ Read [this article to get an overview on Agents](https://lilianweng.github.io/po
 |  Tasks | Toolbox Tools |
 | :------ | :---------------: |
 | `default` | DuckDuckGo + LLM Math + PAL Math |
-| `qa_knowledge_base` | Vector Index + Knowledge Graphs |
+| `qna_local_docs` | Vector Index + Knowledge Graphs |
 
 
 ## Installation
@@ -45,11 +45,10 @@ myagent = ServifAI()
 
 while True:
     text_input = input("Me: ")
-    if text_input != "exit":
-        response = myagent.query(text_input)
-        print(f'ServifAI: {response}\n')
-    else:
+    if text_input == "exit":
         break
+    response = myagent.chat(text_input)
+    print(f'ServifAI: {response}\n')
 ```
 Output
 ```
@@ -63,57 +62,55 @@ ServifAI: The current weather in Bengaluru is mostly cloudy with a temperature o
 ## Data Creation Recipe for Local Knowledge Extraction Tasks
 Consider the example of [Uber 10Q filings](https://investor.uber.com/financials/default.aspx). 
 - Download the quaterly reports for year 2022 and 2023 as pdf and save it locally in a directory (here `reports`).
-- Create a config YAML file `uber_10q.yaml` inside a `configs` dir and fill details as:
+- Create a config YAML file `uber10q_openai.yaml` inside a `configs` dir and fill details as:
 ```yaml
-task: 'qa_knowledge_base'
+task: qna_local_docs
 
-vectordb:
-  dir: "uber_10q"
+llm:
+  org: openai
+  model: gpt-3.5-turbo
+  temperature: 0
+  max_tokens: 3000
 
 data:
-  dir: "reports"
+  dir: reports
   about: "Uber 10Q Filing"
 
-text:
+memory:
+  dir: uber_10q
   max_input_size: 2500
   num_outputs: 1000
   max_chunk_overlap: 0.05
   chunk_size_limit: 1000
-
-llm:
-  org: openai
-  temperature: 0
-  model_name: "gpt-3.5-turbo"
 ```
-- As the task is to extract information from these pdfs, so task chosen is `qa_knowledge_base`. Based on these tasks we choose our *toolbox* which contains specific tools required for task completion. We will be adding more *toolbox*.
+- As the task is to extract information from these pdfs, so task chosen is `qna_local_docs`. Based on these tasks ServifAI chooses *toolbox* which contains specific tools required for task completion. We will be adding more *toolbox* later.
 - To achieve optimum results, its recommended to rename your pdfs as *few words description*. For example, we rename quarterly 10Q reports as `Q1-23.pdf`, `Q4-22.pdf` etc. Do not add blank spaces between words, instead use `hyphen -`. 
 - Also in config file in `data.about`, provide a concise common summary of all these multiple pdfs. For example, here we write this as `Uber 10Q Filing`.
 - Run Python Code
 ```python
 from servifai import ServifAI
-myagent = ServifAI('configs/uber_10q.yaml')
+myagent = ServifAI('configs/uber10q.yaml')
 
 while True:
     text_input = input("Me: ")
-    if text_input != "exit":
-        response = myagent.query(text_input)
-        print(f'ServifAI: {response}\n')
-    else:
+    if text_input == "exit":
         break
+    response = myagent.chat(text_input)
+    print(f'ServifAI: {response}\n')
 ```
 - Output
 ```
-Me: Analyze the revenue growth of Uber across quarters
-ServifAI: Based on the provided context information, the revenue growth of Uber across quarters can be summarized as follows:
+Me: Analyze the revenue growth of Uber across last few quarters
+ServifAI: Based on the provided context, Uber's revenue growth in the last few quarters can be summarized as follows:
 
-- Q3 2022: Revenue growth of 72% year-over-year or 81% on a constant currency basis.
-- Q4 2022: Revenue growth of 59% on a constant currency basis, significantly outpacing the 19% growth in Gross Bookings.
-- Q1 2023: Revenue of $8.8 billion is mentioned, but the growth rate for this quarter is not provided.
+- Q3 2022: 72% year-over-year or 81% on a constant currency basis.
+- Q4 2022: 49% year-over-year.
+- Q1 2023: 29% year-over-year or 33% on a constant currency basis.
 
-Therefore, the specific revenue growth rate for Q1 2023 cannot be determined with the given information.
+Therefore, Uber's revenue growth in the last few quarters has been positive, with varying rates of growth.
 
 Me: How much cash did Uber have in last quarter of 2022?
-ServifAI: Based on the provided context, the cash balance for Uber at the end of Q4 2022 was $4.3 billion.
+ServifAI: Based on the provided context, the cash balance for Uber in Q4 2022 was $4.3 billion.
 
 ```
 

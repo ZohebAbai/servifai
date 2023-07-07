@@ -5,9 +5,8 @@ from pathlib import Path
 
 import yaml
 
-from servifai.llm.openai import OpenAILLM
-from servifai.planning.react import ReactChatAgent
-from servifai.toolbox.knowledge_base import KnowledgeBase
+from servifai.llm import BaseLLM
+from servifai.planning import ReactChatAgent
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
@@ -26,21 +25,15 @@ class ServifAI:
         """
         self.cfg = self._load_config(config_file)
         self.task = self.cfg["task"]
-        self.oaillm = OpenAILLM(
-            self.cfg["llm"], self.cfg["text"]
-        )  # if 'openai' in self.cfg['llm']['org'] else None
-        self.knowledgebase = (
-            KnowledgeBase(
-                Path(BASE_DIR, self.cfg["vectordb"]["dir"]),
-                Path(BASE_DIR, self.cfg["data"]["dir"]),
-                self.cfg["data"]["about"],
-                self.cfg["text"],
-                self.cfg["llm"],
-            )
-            if self.task == "qa_knowledge_base"
-            else None
+        self.llm = BaseLLM(self.cfg["llm"]).llm
+        self.agent = ReactChatAgent(
+            self.task,
+            self.llm,
+            Path(BASE_DIR, self.cfg["memory"]["dir"]),
+            Path(BASE_DIR, self.cfg["data"]["dir"]),
+            self.cfg["data"],
+            self.cfg["memory"],
         )
-        self.agent = ReactChatAgent(self.task, self.knowledgebase, self.oaillm)
 
     def _load_config(self, config_file):
         config = None
@@ -55,7 +48,7 @@ class ServifAI:
                 config = yaml.safe_load(file)
         return config
 
-    def query(self, question: str):
+    def chat(self, question: str):
         """Responds to user query as chat conversation
 
         Args:
@@ -65,10 +58,10 @@ class ServifAI:
             str: Response
         """
         try:
-            if question != "":
-                logging.info("Generating response:")
-                return self.agent.chat(question)
-            else:
+            if not question:
                 logging.warning("No input text provided by user")
+                return "No input provided by user"
+            logging.info("Generating response:")
+            return self.agent.query(question)
         except Exception as e:
-            logging.error(f"Error {e} occured")
+            logging.error(f"Error: {e}")
