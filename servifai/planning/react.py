@@ -1,27 +1,22 @@
 from langchain.agents import initialize_agent
 from langchain.chains.conversation.memory import ConversationBufferMemory
 
-from servifai.toolbox.default import DefaultTools
+from servifai.toolbox import BaseToolBox
 
 
 class ReactChatAgent:
-    def __init__(self, task, knowledge_base, llm):
-        self.task = task
+    def __init__(self, task, llm, dbdir, datadir, dataconfigs, memoryconfigs):
         self.llm = llm
-        self.default_tool = DefaultTools(self.llm)
-        self.knowledge_base = knowledge_base
+        self.toolbox = BaseToolBox(
+            task, llm, dbdir, datadir, dataconfigs, memoryconfigs
+        ).toolbox
         self.memory = ConversationBufferMemory(
             memory_key="chat_history", return_messages=True
         )
 
-    def chat(self, query: str):
-        if self.task == "qa_knowledge_base" and self.knowledge_base is not None:
-            toolbox = self.knowledge_base.as_tool()
-        else:
-            toolbox = self.default_tool.as_tool()
-
+    def query(self, query: str):
         agent = initialize_agent(
-            toolbox,
+            self.toolbox,
             self.llm.model,
             agent="chat-conversational-react-description",
             verbose=True,

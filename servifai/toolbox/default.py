@@ -5,7 +5,7 @@ from langchain.tools import DuckDuckGoSearchRun
 
 class DefaultTools:
     def __init__(self, llm):
-        self.llm = llm.model
+        self.llm = llm
         self.palmath_tool = self._get_pal_math()
         self.llmmath_tool = self._get_llm_math()
         self.web_search = self._get_ddg_search()

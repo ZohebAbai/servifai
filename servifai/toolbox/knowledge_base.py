@@ -15,8 +15,7 @@ from llama_index.indices.query.query_transform.base import DecomposeQueryTransfo
 from llama_index.query_engine.transform_query_engine import TransformQueryEngine
 from llama_index.vector_stores import ChromaVectorStore
 
-from servifai.llm.openai import OpenAILLM
-from servifai.memory.chroma import ChromaDB
+from servifai.memory import ChromaDB
 
 
 class VectorKnowledgeBase:
@@ -34,7 +33,7 @@ class VectorKnowledgeBase:
         return Tool(
             name=f"Knowledge Vector Index {title}",
             func=lambda q: str(query_engine.query(q)),
-            description=f"useful for when you want to answer queries just on {summary}",
+            description=f"useful for answering queries only regarding {summary}",
             return_direct=True,
         )
 
@@ -83,23 +82,22 @@ class KnowledgeGraphs:
         return Tool(
             name="Knowledge Graph Index",
             func=lambda q: str(self._query_engine.query(q)),
-            description=f"useful for when you want to answer queries that require comparing/contrasting or analyzing over multiple sources of {about}",
+            description=f"useful for answering queries that require comparing/contrasting or analyzing over multiple sources about {about}",
             return_direct=True,
         )
 
 
 class KnowledgeBase:
-    def __init__(self, vdb_dir, data_dir, about, text, llm):
+    def __init__(self, vdb_dir, data_dir, about, memoryconfigs, oaillm):
         self.vdb_dir = vdb_dir
         self.data_dir = data_dir
         self.about = about
-        self.max_input_size = int(text["max_input_size"])
-        self.num_outputs = int(text["num_outputs"])
-        self.max_chunk_overlap = float(text["max_chunk_overlap"])
-        self.chunk_size_limit = int(text["chunk_size_limit"])
-        self.llm = llm
-        self.oaillm = OpenAILLM(llm, text)
-        self.llm_predictor = LLMPredictor(llm=self.oaillm.model)
+        self.max_input_size = int(memoryconfigs["max_input_size"])
+        self.num_outputs = int(memoryconfigs["num_outputs"])
+        self.max_chunk_overlap = float(memoryconfigs["max_chunk_overlap"])
+        self.chunk_size_limit = int(memoryconfigs["chunk_size_limit"])
+        self.llm_predictor = LLMPredictor(llm=oaillm.model)
+        self.vectordb = ChromaDB(self.vdb_dir)
         self.vectorstore = self._initiate_vectorstore()
         self.service_context = self._initiate_contexts()[0]
         self.storage_context = self._initiate_contexts()[1]
@@ -109,8 +107,7 @@ class KnowledgeBase:
         self.qe_tools = self._get_query_engine_tools()
 
     def _initiate_vectorstore(self):
-        vectordb = ChromaDB(self.vdb_dir, self.llm["org"])
-        return ChromaVectorStore(chroma_collection=vectordb.collection)
+        return ChromaVectorStore(chroma_collection=self.vectordb.collection)
 
     def _initiate_contexts(self):
         prompt_helper = PromptHelper(
@@ -120,7 +117,9 @@ class KnowledgeBase:
             chunk_size_limit=self.chunk_size_limit,
         )
         self.service_context = ServiceContext.from_defaults(
-            llm_predictor=self.llm_predictor, prompt_helper=prompt_helper
+            llm_predictor=self.llm_predictor,
+            prompt_helper=prompt_helper,
+            embed_model=self.vectordb.embed,
         )
         self.storage_context = StorageContext.from_defaults(
             vector_store=self.vectorstore
@@ -141,8 +140,7 @@ class KnowledgeBase:
         index_summaries = {}
 
         for dbb in Path(self.data_dir).glob(f"*{ext}"):
-            print(dbb)
-            title = dbb.stem
+            title = " ".join(dbb.stem.split("-"))
             self.titles.append(title)
             docs[title] = SimpleDirectoryReader(
                 input_files=[str(dbb)],
@@ -157,7 +155,7 @@ class KnowledgeBase:
             )
             index_summaries[
                 title
-            ] = f"individual source on {self.about} for particular {' '.join(title.split('-'))}"
+            ] = f"individual source generally about {self.about} and particularly on {title}"
         return indices, index_summaries
 
     def _get_query_engine_tools(self):
