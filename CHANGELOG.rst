@@ -1,4 +1,17 @@
 
+2023-07-07
+==========
+
+Added
+-----
+
+- Support for `Azure OpenAI Models`.
+
+Changed
+-------
+
+- Structure of YAML Config.
+
 2023-07-03
 ==========
 Changed
