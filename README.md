@@ -62,7 +62,7 @@ ServifAI: The current weather in Bengaluru is mostly cloudy with a temperature o
 ## Data Creation Recipe for Local Knowledge Extraction Tasks
 Consider the example of [Uber 10Q filings](https://investor.uber.com/financials/default.aspx). 
 - Download the quaterly reports for year 2022 and 2023 as pdf and save it locally in a directory (here `reports`).
-- Create a config YAML file `uber10q_openai.yaml` inside a `configs` dir and fill details as:
+- Create a config YAML file `uber10q.yaml` inside a `configs` dir and fill details as:
 ```yaml
 task: qna_local_docs
 
