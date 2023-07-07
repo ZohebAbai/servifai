@@ -59,7 +59,7 @@ Me: What is the current weather of Bengaluru?
 ServifAI: The current weather in Bengaluru is mostly cloudy with a temperature of 81°F (27°C). The wind is coming from the north at 3 mph (5 km/h). Tomorrow's temperature is expected to be nearly the same as today.
 
 ```
-## Data Creation Recipe for Local Knowledge Extraction Tasks
+## Data Creation Recipe for Local Docs Knowledge Extraction Tasks
 Consider the example of [Uber 10Q filings](https://investor.uber.com/financials/default.aspx). 
 - Download the quaterly reports for year 2022 and 2023 as pdf and save it locally in a directory (here `reports`).
 - Create a config YAML file `uber10q.yaml` inside a `configs` dir and fill details as:
