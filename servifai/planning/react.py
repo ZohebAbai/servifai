@@ -5,6 +5,8 @@ from servifai.toolbox import BaseToolBox
 
 
 class ReactChatAgent:
+    """React Chat Agent"""
+
     def __init__(self, task, llm, dbdir, datadir, dataconfigs, memoryconfigs):
         self.llm = llm
         self.toolbox = BaseToolBox(
@@ -14,7 +16,15 @@ class ReactChatAgent:
             memory_key="chat_history", return_messages=True
         )
 
-    def query(self, query: str):
+    def query(self, query: str) -> str:
+        """agent query response
+
+        Args:
+            query (str): user query
+
+        Returns:
+            str: agent response
+        """
         agent = initialize_agent(
             self.toolbox,
             self.llm.model,

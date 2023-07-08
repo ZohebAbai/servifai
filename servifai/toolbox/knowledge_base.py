@@ -19,12 +19,22 @@ from servifai.memory import ChromaDB
 
 
 class VectorKnowledgeBase:
+    """Vector Index Knowledge Base"""
+
     def __init__(self, vector_indices, index_summaries, service_context):
         self._indices = vector_indices
         self._summaries = index_summaries
         self._service_context = service_context
 
-    def as_tool(self, title):
+    def as_tool(self, title: str) -> Tool:
+        """access vector index as a tool
+
+        Args:
+            title (str): index title
+
+        Returns:
+            Tool: index as tool
+        """
         index = self._indices[title]
         summary = self._summaries[title]
         query_engine = index.as_query_engine(
@@ -39,6 +49,8 @@ class VectorKnowledgeBase:
 
 
 class KnowledgeGraphs:
+    """Graph Knowledge Base"""
+
     def __init__(self, vector_indices, index_summaries, service_context, llm_predictor):
         self._indices = vector_indices
         self._summaries = index_summaries
@@ -78,7 +90,15 @@ class KnowledgeGraphs:
             custom_query_engines=self._custom_query_engines
         )
 
-    def as_tool(self, about):
+    def as_tool(self, about: str) -> Tool:
+        """access knowledge graph as tool
+
+        Args:
+            about (str): about the data
+
+        Returns:
+            Tool: graph as tool
+        """
         return Tool(
             name="Knowledge Graph Index",
             func=lambda q: str(self._query_engine.query(q)),
@@ -88,6 +108,8 @@ class KnowledgeGraphs:
 
 
 class KnowledgeBase:
+    """Combined Knowledge Base including vector and graph indices"""
+
     def __init__(self, vdb_dir, data_dir, about, memoryconfigs, oaillm):
         self.vdb_dir = vdb_dir
         self.data_dir = data_dir
@@ -173,4 +195,9 @@ class KnowledgeBase:
         return qe_tools
 
     def as_tool(self):
+        """access the combined knowledge base as a tool
+
+        Returns:
+            list: list of knowledge indices as tools
+        """
         return self.qe_tools

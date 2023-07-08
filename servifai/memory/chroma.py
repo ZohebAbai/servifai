@@ -10,6 +10,8 @@ load_dotenv()
 
 
 class ChromaDB:
+    """ChromaDB vectorstore"""
+
     def __init__(self, db_dir):
         self._path = db_dir
         self._oai_org = os.getenv("OPENAI_API_TYPE")

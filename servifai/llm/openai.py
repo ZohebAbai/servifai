@@ -7,6 +7,8 @@ load_dotenv()
 
 
 class OpenAI:
+    """OpenAI LLM Class"""
+
     def __init__(self, llmconfigs):
         self._name = llmconfigs["model"]
         self._temp = int(llmconfigs["temperature"])

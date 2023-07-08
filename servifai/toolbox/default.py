@@ -4,6 +4,8 @@ from langchain.tools import DuckDuckGoSearchRun
 
 
 class DefaultTools:
+    """ServifAI Default Toolbox"""
+
     def __init__(self, llm):
         self.llm = llm
         self.palmath_tool = self._get_pal_math()
@@ -32,4 +34,9 @@ class DefaultTools:
         )
 
     def as_tool(self):
+        """access default toolbox
+
+        Returns:
+            list: list of tools
+        """
         return [self.palmath_tool, self.llmmath_tool, self.web_search]

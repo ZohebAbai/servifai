@@ -17,12 +17,9 @@ DEFAULT_CONFIG = Path(BASE_DIR, "servifai/default_config.yaml")
 
 
 class ServifAI:
-    def __init__(self, config_file=None):
-        """Initializes a ServifAI instance with specific config for a given task
+    """Initializes a ServifAI instance with specific config for a given task"""
 
-        Args:
-            cfg (DictConfig): specific constants for a particular data
-        """
+    def __init__(self, config_file=None):
         self.cfg = self._load_config(config_file)
         self.task = self.cfg["task"]
         self.llm = BaseLLM(self.cfg["llm"]).llm
@@ -48,7 +45,7 @@ class ServifAI:
                 config = yaml.safe_load(file)
         return config
 
-    def chat(self, question: str):
+    def chat(self, question: str) -> str:
         """Responds to user query as chat conversation
 
         Args:
@@ -60,7 +57,7 @@ class ServifAI:
         try:
             if not question:
                 logging.warning("No input text provided by user")
-                return "No input provided by user"
+                return "No input provided by user. Try Again."
             logging.info("Generating response:")
             return self.agent.query(question)
         except Exception as e:
