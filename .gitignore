@@ -166,3 +166,4 @@ uber_10q/
 archive.txt
 changelog.d/
 notebooks/
+!examples/qna_local_docs/configs

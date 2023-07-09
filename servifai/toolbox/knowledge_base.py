@@ -152,32 +152,35 @@ class KnowledgeBase:
         """
         Loads the data, chunks it, create embedding for each chunk
         and then stores the embedding to a vector database.
+        Currently it supports pdf and docx file formats - two
+        most used formats as personal unstructured document reader.
 
         Args:
             data_dir (str): the directory containing the data
         """
-        ext = ".pdf"
+        exts = [".pdf", ".docx"]
         docs = {}
         indices = {}
         index_summaries = {}
 
-        for dbb in Path(self.data_dir).glob(f"*{ext}"):
-            title = " ".join(dbb.stem.split("-"))
-            self.titles.append(title)
-            docs[title] = SimpleDirectoryReader(
-                input_files=[str(dbb)],
-                recursive=True,
-                exclude_hidden=True,
-                required_exts=[ext],
-            ).load_data()
-            indices[title] = VectorStoreIndex.from_documents(
-                docs[title],
-                service_context=self.service_context,
-                storage_context=self.storage_context,
-            )
-            index_summaries[
-                title
-            ] = f"individual source generally about {self.about} and particularly on {title}"
+        for ext in exts:
+            for dbb in Path(self.data_dir).glob(f"*{ext}"):
+                title = " ".join(dbb.stem.split("-"))
+                self.titles.append(title)
+                docs[title] = SimpleDirectoryReader(
+                    input_files=[str(dbb)],
+                    recursive=True,
+                    exclude_hidden=True,
+                    required_exts=[ext],
+                ).load_data()
+                indices[title] = VectorStoreIndex.from_documents(
+                    docs[title],
+                    service_context=self.service_context,
+                    storage_context=self.storage_context,
+                )
+                index_summaries[
+                    title
+                ] = f"individual source generally about {self.about} and particularly on {title}"
         return indices, index_summaries
 
     def _get_query_engine_tools(self):
