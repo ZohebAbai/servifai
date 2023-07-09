@@ -23,7 +23,7 @@ Currently we only support `OpenAI` models. If you are privacy concerned you shou
 |  Tasks | Toolbox Tools | Required File Extensions |
 | :------ | :---------------: | ------: |
 | `default` | DuckDuckGo + LLM Math + PAL Math | None |
-| `qna_local_docs` | Vector Index + Knowledge Graphs | `PDF`, `DOCX` |
+| `qna_local_docs` | Vector Index + Knowledge Graphs | `PDF`/`DOCX` |
 
 
 ## Installation
