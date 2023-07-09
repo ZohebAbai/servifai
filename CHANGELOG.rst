@@ -1,4 +1,13 @@
 
+2023-07-09
+==========
+
+Added
+-----
+
+- `DOCX` support added
+- Examples added
+
 2023-07-07
 ==========
 
