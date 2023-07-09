@@ -4,7 +4,7 @@ llm:
   org: openai
   model: gpt-3.5-turbo
   temperature: 0
-  max_tokens: 3000
+  max_tokens: 2048
 
 data:
   dir: reports

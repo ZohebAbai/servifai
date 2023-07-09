@@ -56,12 +56,41 @@ while True:
 ```
 Output
 ```
-Me: Hi, How are you?
-ServifAI: Hi, I'm an AI language model, so I don't have feelings, but I'm here to help you with any questions or tasks you have!
+Me: I am feeling bored at home, provide me a list of places in bengaluru to chill out on a sunday.
+ServifAI: Here is a list of places in Bengaluru to chill out on a Sunday:
 
-Me: What is the current weather of Bengaluru?
-ServifAI: The current weather in Bengaluru is mostly cloudy with a temperature of 81°F (27°C). The wind is coming from the north at 3 mph (5 km/h). Tomorrow's temperature is expected to be nearly the same as today.
+1. Cubbon Park
+2. Rasta Cafe
+3. Skandagiri
+4. Uttari Betta Sunrise
+5. Ranganathaswamy Betta
+6. Adventure Camping at Nandi Hills
+7. Riverside Manchanabele
+8. Caving at AntaraGange
+9. Clubbing at Hard Rock Café
+10. High Ultra lounge
+11. Toit
+12. Dinning at Empire Hotel
 
+These are just a few options, and there are many more places in Bengaluru where you can relax and have a good time on a Sunday.
+
+Me: Too many options for a day. Provide a itinerary instead for one day
+ServifAI: Based on the search results, here is a suggested one-day itinerary for Bengaluru:
+
+Morning: Start your day with a visit to Cubbon Park and enjoy the greenery. Join the locals on their early morning walk.
+
+Afternoon: Indulge in a classic South Indian breakfast and then head to Savandurga, a famous place known for its temples and rock climbing.
+
+Evening: Explore the vibrant streets of Bengaluru and visit popular spots like MG Road or Brigade Road for shopping and dining.
+
+Night: End your day by experiencing the nightlife of Bengaluru at one of the city's popular clubs or lounges.
+
+Please note that this is just a suggested itinerary and you can customize it based on your preferences and interests.
+
+Me: Do you think this would be possible to complete based on today's weather?
+ServifAI: Based on the weather forecast, it is possible to complete the activity you mentioned. The maximum temperature in Bengaluru is expected to be around 32 degrees Celsius today.
+
+Me: exit
 ```
 
 **Check [Examples](https://github.com/ZohebAbai/servifai/tree/main/examples) for more.**
