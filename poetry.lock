@@ -951,6 +951,16 @@ files = [
 ]
 
 [[package]]
+name = "docx2txt"
+version = "0.8"
+description = "A pure python-based utility to extract text and images from docx files."
+optional = false
+python-versions = "*"
+files = [
+    {file = "docx2txt-0.8.tar.gz", hash = "sha256:2c06d98d7cfe2d3947e5760a57d924e3ff07745b379c8737723922e7009236e5"},
+]
+
+[[package]]
 name = "duckdb"
 version = "0.8.1"
 description = "DuckDB embedded database"
@@ -4572,4 +4582,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "99c757c260eb84c281523287a658a91c9ef8f01352ef9a1d7b917386fc9c8027"
+content-hash = "1e7a151d1e350376c7501171e2ceeb5a34e345f49ba038e4e2c8e28030d1e541"
